@@ -1,9 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="SmoothGPT">
   <rect width="128" height="128" rx="28" fill="#15141A"/>
-  <path d="M40 78 L40 100 L62 78 Z" fill="#FF7139"/>
-  <rect x="22" y="26" width="84" height="56" rx="18" fill="#FF7139"/>
-  <g fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M50 42 L64 54 L50 66"/>
-    <path d="M66 42 L80 54 L66 66"/>
+  <g fill="none" stroke="#5C5C68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="24" y="28" width="80" height="52" rx="16"/>
+    <path d="M44 80 L44 96 L62 80"/>
+  </g>
+  <g fill="none" stroke="#FF7139" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M52 44 L64 54 L52 64"/>
+    <path d="M66 44 L78 54 L66 64"/>
   </g>
 </svg>
