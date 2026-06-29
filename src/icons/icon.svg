@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#4A6CF7" />
-      <stop offset="1" stop-color="#2B44C2" />
-    </linearGradient>
-  </defs>
-  <rect width="96" height="96" rx="22" fill="url(#bg)" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="SmoothGPT">
+  <rect width="128" height="128" rx="28" fill="#15141A"/>
+  <path d="M40 78 L40 100 L62 78 Z" fill="#FF7139"/>
+  <rect x="22" y="26" width="84" height="56" rx="18" fill="#FF7139"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M50 42 L64 54 L50 66"/>
+    <path d="M66 42 L80 54 L66 66"/>
+  </g>
 </svg>
