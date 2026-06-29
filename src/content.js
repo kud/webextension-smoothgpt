@@ -179,4 +179,7 @@ const init = () => {
   setTimeout(init, 500)
 }
 
-init()
+// Graceful degradation: do nothing on browsers without `content-visibility`
+// (the whole technique is a no-op there). strict_min_version already gates
+// installation, but this keeps the script harmless if loaded anywhere older.
+if (CSS.supports("content-visibility", "auto")) init()
