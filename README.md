@@ -23,7 +23,7 @@ npm install
 npm run dev        # launches Firefox Nightly with the extension loaded
 ```
 
-For changes to `src/background.js`, reload the extension manually via `about:debugging → This Firefox → Reload`. Content script and icon changes hot-reload automatically under `web-ext run`.
+Content script and icon changes hot-reload automatically under `web-ext run` — no manual reload needed.
 
 To load without Firefox Nightly: open `about:debugging → This Firefox → Load Temporary Add-on` and point to `manifest.json`. The extension is removed on browser restart.
 
