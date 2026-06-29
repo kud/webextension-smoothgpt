@@ -1,14 +1,32 @@
+<div align="center">
+
+🦊
+
 # SmoothGPT
 
-A Firefox extension that makes long ChatGPT conversations fast. It applies `content-visibility: auto` to off-screen message turns so the browser skips layout and paint work for nodes outside the viewport, eliminating the jitter and input lag that builds up in 500+ message threads.
+![MIT](https://img.shields.io/badge/licence-MIT-22C55E?style=flat-square)
+![Firefox 142+](https://img.shields.io/badge/Firefox-142%2B-FF7139?style=flat-square&logo=firefox-browser&logoColor=white)
+![AMO version](https://img.shields.io/amo/v/smoothgpt?style=flat-square&label=AMO&color=0060DF)
+![AMO users](https://img.shields.io/amo/users/smoothgpt?style=flat-square&color=0060DF)
 
-The extension is content-script-only, fully local, and collects no data. There are no accounts, no telemetry, no network calls beyond the page itself.
+**Makes long ChatGPT conversations fast by virtualising off-screen message turns with CSS containment.**
+
+</div>
+
+## Features
+
+- **Instant speed recovery** — eliminates the jitter and input lag that builds up in long ChatGPT threads, regardless of message count.
+- **CSS-containment only** — applies `content-visibility: auto` to off-screen turns; no nodes are removed or detached from the DOM.
+- **Nothing breaks** — Ctrl+F, text selection, code-block copy buttons, and ChatGPT's own React reconciliation all keep working normally.
+- **Fully local, zero telemetry** — the extension makes no network calls beyond the page itself and collects no data.
+- **No accounts or extra permissions** — the only access granted is content-script injection on `chatgpt.com` and `chat.openai.com`.
+- **Activates only when needed** — containment engages past 30 turns so short conversations are left entirely untouched.
 
 ## How it works
 
 ChatGPT keeps every message turn live in the DOM. In long threads this produces thousands of nodes that the browser must re-layout on each new token. SmoothGPT applies CSS containment (`content-visibility: auto` + `contain-intrinsic-size`) to turns outside the viewport, telling the browser it can skip their rendering until they are scrolled into view. The nodes remain in the DOM — Ctrl+F, text selection, code-block copy buttons, and ChatGPT's own React reconciliation all continue to work normally.
 
-Containment is only engaged once a conversation exceeds 30 turns. The currently-streaming turn is always exempted to preserve auto-scroll-to-bottom behaviour. A `MutationObserver` on the conversation container keeps containment applied as new turns arrive and survives SPA chat switches.
+Containment is only engaged once a conversation exceeds 30 turns. The currently-streaming turn and the last turn are always exempted to preserve auto-scroll-to-bottom behaviour. A `MutationObserver` on the conversation container keeps containment applied as new turns arrive and survives SPA chat switches.
 
 ## Install
 
@@ -18,21 +36,20 @@ To load temporarily for development, see **Development** below.
 
 ## Development
 
-```bash
+```sh
 npm install
 npm run dev        # launches Firefox Nightly with the extension loaded
 ```
 
-Content script and icon changes hot-reload automatically under `web-ext run` — no manual reload needed.
+Content-script and icon changes hot-reload automatically under `web-ext run` — no manual reload needed.
 
 To load without Firefox Nightly: open `about:debugging → This Firefox → Load Temporary Add-on` and point to `manifest.json`. The extension is removed on browser restart.
 
-## Lint and build
-
-```bash
-npm run lint       # validate manifest and source against AMO rules
-npm run build      # package into web-ext-artifacts/
-```
+| Command         | Description                                          |
+| --------------- | ---------------------------------------------------- |
+| `npm run dev`   | Launch Firefox Nightly with the extension hot-loaded |
+| `npm run lint`  | Validate manifest and source against AMO rules       |
+| `npm run build` | Package into `web-ext-artifacts/`                    |
 
 ## Publishing
 
@@ -40,37 +57,27 @@ npm run build      # package into web-ext-artifacts/
 
 **Subsequent releases** — bump, tag, and push:
 
-```bash
+```sh
 npm version patch   # or minor / major
 git push --follow-tags
 ```
 
-`npm version` syncs the new version into `manifest.json` automatically (via the `version` lifecycle hook), then CI picks up the `v*` tag and runs `npm run sign:listed` to sign and upload the new version to AMO.
+`npm version` syncs the new version into `manifest.json` automatically (via the `version` lifecycle hook). CI picks up the `v*` tag, signs the package, and uploads it to AMO.
 
-**Unlisted / self-signed** — for side-loading outside the AMO store:
+**CI setup (one time)** — before the first CI-driven release, add two secrets to the GitHub repo:
 
-```bash
-npm run sign:self
-```
-
-Reads `WEB_EXT_API_KEY` / `WEB_EXT_API_SECRET` from the environment. Same credentials as listed signing.
-
-## CI setup (one time)
-
-Before the first CI-driven release, add two secrets to the GitHub repo:
-
-```bash
+```sh
 gh secret set MOZILLA_ADDONS_JWT_ISSUER
 gh secret set MOZILLA_ADDONS_JWT_SECRET
 ```
 
-Retrieve both values from https://addons.mozilla.org/en-US/developers/addon/api/key/ (the JWT issuer and JWT secret). `release.yml` maps them to the environment variable names that `web-ext` expects.
+Retrieve both values from [addons.mozilla.org/en-US/developers/addon/api/key/](https://addons.mozilla.org/en-US/developers/addon/api/key/).
 
 ## Permissions
 
-- `https://chatgpt.com/*` and `https://chat.openai.com/*` — content script injection only; required to read and modify the conversation DOM. No data leaves the browser.
+- `https://chatgpt.com/*` and `https://chat.openai.com/*` — content-script injection only; required to read and modify the conversation DOM.
 
-No other permissions are requested.
+No data leaves the browser. No other permissions are requested.
 
 ## Licence
 
